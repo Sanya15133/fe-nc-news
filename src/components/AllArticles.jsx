@@ -3,8 +3,8 @@ import { getArticles } from "../../api";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
-import { CarouselItem } from "react-bootstrap";
-import { Carousel } from "react-bootstrap";
+// import { CarouselItem } from "react-bootstrap";
+// import { Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function AllArticles() {
@@ -20,20 +20,16 @@ export default function AllArticles() {
   return (
     <section>
       <Header />
-      <Carousel>
-        {articles.map(({ title, article_img_url, article_id }) => {
-          return (
-            <CarouselItem key={article_id} className="carousel">
-              <h3>{title}</h3>
-              <div className="carousel-images">
-                <Link to={`/articles/${article_id}`}>
-                  <img src={article_img_url} />
-                </Link>
-              </div>
-            </CarouselItem>
-          );
-        })}
-      </Carousel>
+      {articles.map(({ title, article_img_url, article_id }) => {
+        return (
+          <div key={article_id} className="articles-body">
+            <h3 className="centered">{title}</h3>
+            <Link to={`/articles/${article_id}`}>
+              <img src={article_img_url} className="images" />
+            </Link>
+          </div>
+        );
+      })}
       <Footer />
     </section>
   );
