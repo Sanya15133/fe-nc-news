@@ -37,10 +37,7 @@ h2 {
   color: black;
   margin: 2%;
 }
-.comment-section {
-  text-align: center;
-  border: 1px solid black;
-}
+
 .article-text {
   padding-top: 10px;
   margin-top: 2%;
@@ -94,6 +91,11 @@ h2 {
   margin: 5%;
 }
 
+.carousel-text {
+  color: black;
+  text-decoration: none;
+}
+
 .loading {
   padding: 5%;
   border: 5px solid black;
@@ -106,6 +108,30 @@ h2 {
 .votes {
   display: flex;
   justify-content: center;
+  background-color: white;
+  padding-top: 5%;
 }
 
+.comment {
+  justify-content: center;
+  text-align: center;
+  border: 1px solid black;
+  margin: 5%;
+  padding: 5%;
+  background-color: rgb(221, 204, 204);
+  border-radius: 5%;
+}
 
+.comment-section {
+  justify-content: center;
+  text-align: center;
+  border: 1px solid black;
+  margin: 5%;
+  padding: 5%;
+  background-color: rgb(221, 204, 204);
+  border-radius: 5%;
+}
+.votes-info {
+  background-color: white;
+  border: 1px solid black;
+}
