@@ -41,8 +41,8 @@ export default function Homepage() {
         {articles.map(({ title, article_img_url, article_id }) => {
           return (
             <Carousel.Item key={article_id}>
+              <h4 className="carousel-text">{title}</h4>
               <Link to={`/articles/${article_id}`}>
-                <h4 className="carousel-text">{title}</h4>
                 <img src={article_img_url} className="carousel-pic" />
               </Link>
             </Carousel.Item>

@@ -46,8 +46,10 @@ export default function ArticleCard() {
         <p className="article-author">Author: {article.author}</p>
       </div>
       <div className="comment-section">
-        <p className="comment">
-          <Link>{article.comment_count} Comments</Link>
+        <p className="comment-article">
+          <Link to={`/articles/${article_id}/comments`}>
+            {article.comment_count} Comments
+          </Link>
         </p>
         <div className="votes">
           <p>👍🏼</p> {article.votes}

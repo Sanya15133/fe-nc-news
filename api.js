@@ -18,11 +18,11 @@ export const getArticleById = (article_id) => {
   });
 };
 
-// export const getTopics = () => {
-//   let endpoint = "https://nc-news-lu0p.onrender.com/api/topics";
+export const getCommentsById = (article_id) => {
+  let endpoint = `https://nc-news-lu0p.onrender.com/api/articles/${article_id}/comments`;
 
-//   return axios.get(endpoint).then((response) => {
-//     console.log(response.data.topics.slug, "here");
-//     return response.data.topics.slug
-//   });
-// };
+  return axios.get(endpoint).then((response) => {
+    console.log(response.data.articles, "here");
+    return response.data.articles;
+  });
+};
