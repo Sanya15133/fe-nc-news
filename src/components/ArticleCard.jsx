@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getArticleById } from "../../api";
+import { getArticleById, updateVotesById } from "../../api";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function ArticleCard() {
   const [article, setArticle] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [votes, setVotes] = useState(0);
   const [isError, setIsError] = useState(false);
 
   const { article_id } = useParams();
@@ -36,6 +37,13 @@ export default function ArticleCard() {
       </div>
     );
 
+  function handleClick(event) {
+    setVotes((currVotes) => {
+      return (currVotes += +event);
+    });
+    updateVotesById(article_id, event);
+  }
+
   return (
     <section>
       <div key={article.article_id} className="articles-body">
@@ -51,27 +59,10 @@ export default function ArticleCard() {
             {article.comment_count} Comments
           </Link>
         </p>
-        <div className="votes">
-          <p
-            onClick={() => {
-              setVotes((currVotes) => {
-                return currVotes + 1;
-              });
-            }}
-          >
-            👍🏼
-          </p>{" "}
-          {article.votes}
-          <p
-            onClick={() => {
-              setVotes((currVotes) => {
-                return currVotes + 1;
-              });
-            }}
-          >
-            👎🏼
-          </p>
-        </div>
+      </div>
+      <div className="votes">
+        <p onClick={() => handleClick("1")}>👍🏼</p> {votes}
+        <p onClick={() => handleClick("-1")}>👎🏼</p>
       </div>
     </section>
   );
