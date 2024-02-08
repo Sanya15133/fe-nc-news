@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getArticles } from "../../api";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
+import { format, formatDate } from "date-fns";
 
 export default function AllArticles() {
   const [articles, setArticles] = useState([]);
@@ -12,10 +13,8 @@ export default function AllArticles() {
   const topicNames = searchParams.get("topic");
 
   useEffect(() => {
-    console.log(topicNames, "topic inside");
     getArticles(topicNames)
       .then((articleData) => {
-        console.log(articleData, "in article function");
         setArticles(articleData);
         setIsLoading(false);
       })
@@ -40,18 +39,45 @@ export default function AllArticles() {
 
   return (
     <section className="fullCard">
-      {articles.map(({ title, article_img_url, article_id, topic }) => {
-        return (
-          <div key={article_id}>
-            <Link to={`/articles/${article_id}`}>
-              <h4 className="centered">{title}</h4>
+      <div className="sortorder">
+        <form className="sortby">
+          <label>Sort by </label>
+          <select>
+            <option>Date</option>
+            <option>Comments</option>
+            <option>Votes</option>
+          </select>
+        </form>
+        <section className="orderby">
+          <form>
+            <label>Order by </label>
+            <select>
+              <option>Ascending</option>
+              <option>Descending</option>
+            </select>
+          </form>
+        </section>
+      </div>
+      {articles.map(
+        ({ title, article_img_url, article_id, topic, created_at, votes }) => {
+          return (
+            <div key={article_id}>
               <div className="articles-body">
-                <img src={article_img_url} className="images" />
+                <h4 className="centered">{title}</h4>
+                <Link to={`/articles/${article_id}`}>
+                  <img src={article_img_url} className="images" />
+                </Link>
+                <br></br>
+                <br></br>
+                <div className="date">
+                  <p>Posted on {format(created_at, "PPPP")}</p>
+                  <p>Votes: {votes}</p>
+                </div>
               </div>
-            </Link>
-          </div>
-        );
-      })}
+            </div>
+          );
+        }
+      )}
     </section>
   );
 }

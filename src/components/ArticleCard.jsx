@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getArticleById, updateVotesById } from "../../api";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 export default function ArticleCard() {
   const [article, setArticle] = useState([]);
@@ -51,7 +52,9 @@ export default function ArticleCard() {
         <img src={article.article_img_url} className="images" />
         <br></br>
         <p className="article-text">{article.body}</p>
-        <p className="article-author">Author: {article.author}</p>
+        <p className="article-author">
+          Posted by {article.author} on {format(article.created_at, "PPPP")}
+        </p>
       </div>
       <div className="comment-section">
         <p className="comment-article">
