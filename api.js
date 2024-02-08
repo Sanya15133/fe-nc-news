@@ -30,3 +30,13 @@ export const getCommentsById = (article_id) => {
   });
 };
 
+export const updateVotesById = (article_id, votes) => {
+
+  return axios
+    .patch(`https://nc-news-lu0p.onrender.com/api/articles/${article_id}`, {
+      inc_votes: votes,
+    })
+    .then((response) => {
+      return response.data.article;
+    });
+};

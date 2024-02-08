@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function ArticleCard() {
   const [article, setArticle] = useState([]);
+  
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
