@@ -12,8 +12,10 @@ export default function AllArticles() {
   const topicNames = searchParams.get("topic");
 
   useEffect(() => {
+    console.log(topicNames, "topic inside");
     getArticles(topicNames)
       .then((articleData) => {
+        console.log(articleData, "in article function");
         setArticles(articleData);
         setIsLoading(false);
       })

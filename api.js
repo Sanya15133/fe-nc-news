@@ -3,14 +3,13 @@ import axios from "axios";
 export const getArticles = (topic) => {
   let endpoint = "https://nc-news-lu0p.onrender.com/api/articles";
 
-  if (topic !== undefined) {
+  console.log(topic, "topic");
+  if (topic) {
     endpoint += `?topic=${topic}`;
   }
 
-  console.log(topic, "topic in api js");
-
   return axios.get(endpoint).then((response) => {
-    console.log(response.data.articles);
+    console.log(response.data.articles, "the articles");
     return response.data.articles;
   });
 };
