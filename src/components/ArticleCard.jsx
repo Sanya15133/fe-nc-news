@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getArticleById } from "../../api";
+import { getArticleById, updateVotesById } from "../../api";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function ArticleCard() {
   const [article, setArticle] = useState([]);
-  
+  const [votes, setVotes] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
