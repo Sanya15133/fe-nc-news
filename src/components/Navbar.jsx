@@ -9,9 +9,15 @@ export default function Navbar() {
       <Link to="/articles">
         <p>Articles</p>
       </Link>
-      <p>Coding</p>
-      <p>Football</p>
-      <p>Cooking</p>
+      <Link to="articles?topic=coding">
+        <p>Coding</p>
+      </Link>
+      <Link to="articles?topic=football">
+        <p>Football</p>
+      </Link>
+      <Link to="articles?topic=cooking">
+        <p>Cooking</p>
+      </Link>
     </section>
   );
 }

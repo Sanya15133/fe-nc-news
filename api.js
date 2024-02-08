@@ -1,9 +1,14 @@
 import axios from "axios";
 
-export const getArticles = () => {
+export const getArticles = (topic) => {
   let endpoint = "https://nc-news-lu0p.onrender.com/api/articles";
 
+  if (topic) {
+    endpoint += `?topic=${topic}`;
+  }
+
   return axios.get(endpoint).then((response) => {
+
     return response.data.articles;
   });
 };
