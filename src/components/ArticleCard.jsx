@@ -32,7 +32,7 @@ export default function ArticleCard() {
   if (isError)
     return (
       <div className="loading">
-        <p>Oops! Erm, something has gone wrong!</p>
+        <p>Oops! This article has no comments!</p>
       </div>
     );
 
