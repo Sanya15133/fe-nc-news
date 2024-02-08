@@ -32,7 +32,7 @@ export default function ArticleCard() {
   if (isError)
     return (
       <div className="loading">
-        <p>Oops! Erm, something has gone wrong!</p>
+        <p>Oops! This article has no comments!</p>
       </div>
     );
 
@@ -52,8 +52,25 @@ export default function ArticleCard() {
           </Link>
         </p>
         <div className="votes">
-          <p>👍🏼</p> {article.votes}
-          <p>👎🏼</p>
+          <p
+            onClick={() => {
+              setVotes((currVotes) => {
+                return currVotes + 1;
+              });
+            }}
+          >
+            👍🏼
+          </p>{" "}
+          {article.votes}
+          <p
+            onClick={() => {
+              setVotes((currVotes) => {
+                return currVotes + 1;
+              });
+            }}
+          >
+            👎🏼
+          </p>
         </div>
       </div>
     </section>
