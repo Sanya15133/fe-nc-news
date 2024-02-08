@@ -52,8 +52,25 @@ export default function ArticleCard() {
           </Link>
         </p>
         <div className="votes">
-          <p>👍🏼</p> {article.votes}
-          <p>👎🏼</p>
+          <p
+            onClick={() => {
+              setVotes((currVotes) => {
+                return currVotes + 1;
+              });
+            }}
+          >
+            👍🏼
+          </p>{" "}
+          {article.votes}
+          <p
+            onClick={() => {
+              setVotes((currVotes) => {
+                return currVotes + 1;
+              });
+            }}
+          >
+            👎🏼
+          </p>
         </div>
       </div>
     </section>
