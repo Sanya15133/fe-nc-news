@@ -14,25 +14,25 @@ export default function AllArticles() {
 
   const topicNames = searchParams.get("topic");
   const getSortBy = searchParams.get("sort_by");
-  const getOrderBy = searchParams.get("order_by");
+  const getOrderBy = searchParams.get("order");
 
   function handleSortOnClick(event) {
     const newParams = new URLSearchParams(searchParams);
     newParams.set("sort_by", event.target.value);
-    setSearchParams(newParams);
+    console.log(event.target.value, "sort");
     setSortBy(event.target.value);
+    setSearchParams(newParams);
   }
 
   function handleOrderOnClick(event) {
     const newParams = new URLSearchParams(searchParams);
-    newParams.set("order_by", event.target.value);
-    console.log(event.target.value, "here");
-    setSearchParams(newParams);
+    newParams.set("order", event.target.value);
+    console.log(event.target.value, "order");
     setOrderBy(event.target.value);
+    setSearchParams(newParams);
   }
 
   useEffect(() => {
-    console.log("hello");
     getArticles(topicNames, getSortBy, getOrderBy)
       .then((articleData) => {
         setArticles(articleData);
@@ -68,15 +68,13 @@ export default function AllArticles() {
             <option value="votes">Votes</option>
           </select>
         </form>
-        <section className="orderby">
-          <form className="order" name="order_by" id="orderform">
-            <label>Order by </label>
-            <select value={orderBy} onChange={handleOrderOnClick}>
-              <option value="desc">Descending</option>
-              <option value="asc">Ascending</option>
-            </select>
-          </form>
-        </section>
+        <form className="orderby" name="order_by" id="orderform">
+          <label>Order by </label>
+          <select value={orderBy} onChange={handleOrderOnClick}>
+            <option value="DESC">Descending</option>
+            <option value="ASC">Ascending</option>
+          </select>
+        </form>
       </div>
       {articles.map(
         ({

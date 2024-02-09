@@ -12,8 +12,8 @@ import CommentCard from "./components/CommentCard";
 function App() {
   return (
     <section>
-      <Header />
       <Navbar />
+      <Header />
       <Routes>
         <Route path="/articles" element={<AllArticles />} />
         <Route path="/" element={<Homepage />} />
