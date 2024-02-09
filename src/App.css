@@ -25,6 +25,14 @@
   margin: 5%;
 }
 
+.sortorder {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  padding: 1%;
+  margin: 1%;
+}
+
 .article-author {
   text-align: center;
   color: black;
@@ -135,6 +143,11 @@
   border-radius: 5%;
 }
 .votes-info {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.date {
   background-color: white;
   border: 1px solid black;
 }
