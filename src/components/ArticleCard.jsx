@@ -8,6 +8,7 @@ export default function ArticleCard() {
   const [article, setArticle] = useState([]);
   const [votes, setVotes] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [votes, setVotes] = useState(0);
   const [isError, setIsError] = useState(false);
 
   const { article_id } = useParams();

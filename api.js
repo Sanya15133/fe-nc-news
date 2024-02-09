@@ -16,6 +16,8 @@ export const getArticles = (topic, sort_by, order_by) => {
     .then((response) => {
       return response.data.articles;
     });
+=======
+
 };
 
 export const getArticleById = (article_id) => {
