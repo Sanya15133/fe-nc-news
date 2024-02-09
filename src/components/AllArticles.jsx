@@ -2,18 +2,38 @@ import React, { useEffect, useState } from "react";
 import { getArticles } from "../../api";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { format, formatDate } from "date-fns";
+import { format } from "date-fns";
 
 export default function AllArticles() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [sortBy, setSortBy] = useState("");
+  const [orderBy, setOrderBy] = useState("");
 
   const topicNames = searchParams.get("topic");
+  const getSortBy = searchParams.get("sort_by");
+  const getOrderBy = searchParams.get("order_by");
+
+  function handleSortOnClick(event) {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("sort_by", event.target.value);
+    setSearchParams(newParams);
+    setSortBy(event.target.value);
+  }
+
+  function handleOrderOnClick(event) {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("order_by", event.target.value);
+    console.log(event.target.value, "here");
+    setSearchParams(newParams);
+    setOrderBy(event.target.value);
+  }
 
   useEffect(() => {
-    getArticles(topicNames)
+    console.log("hello");
+    getArticles(topicNames, getSortBy, getOrderBy)
       .then((articleData) => {
         setArticles(articleData);
         setIsLoading(false);
@@ -21,7 +41,7 @@ export default function AllArticles() {
       .catch(() => {
         setIsError(true);
       });
-  }, [topicNames]);
+  }, [topicNames, getSortBy, getOrderBy]);
 
   if (isLoading)
     return (
@@ -40,26 +60,33 @@ export default function AllArticles() {
   return (
     <section className="fullCard">
       <div className="sortorder">
-        <form className="sortby">
+        <form className="sortby" name="sort_by" id="sortform">
           <label>Sort by </label>
-          <select>
-            <option>Date</option>
-            <option>Comments</option>
-            <option>Votes</option>
+          <select value={sortBy} onChange={handleSortOnClick}>
+            <option value="created_at">Date</option>
+            <option value="comment_count">Comments</option>
+            <option value="votes">Votes</option>
           </select>
         </form>
         <section className="orderby">
-          <form>
+          <form className="order" name="order_by" id="orderform">
             <label>Order by </label>
-            <select>
-              <option>Ascending</option>
-              <option>Descending</option>
+            <select value={orderBy} onChange={handleOrderOnClick}>
+              <option value="desc">Descending</option>
+              <option value="asc">Ascending</option>
             </select>
           </form>
         </section>
       </div>
       {articles.map(
-        ({ title, article_img_url, article_id, topic, created_at, votes }) => {
+        ({
+          title,
+          article_img_url,
+          article_id,
+          created_at,
+          votes,
+          comment_count,
+        }) => {
           return (
             <div key={article_id}>
               <div className="articles-body">
@@ -72,6 +99,7 @@ export default function AllArticles() {
                 <div className="date">
                   <p>Posted on {format(created_at, "PPPP")}</p>
                   <p>Votes: {votes}</p>
+                  <p>Comments: {comment_count}</p>
                 </div>
               </div>
             </div>
