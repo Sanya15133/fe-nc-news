@@ -30,7 +30,7 @@ export default function AllCommentsById() {
   if (isError)
     return (
       <div className="loading">
-        <p>Oops! Erm, something has gone wrong!</p>
+        <p>Oops! This article has no comments to show!</p>
       </div>
     );
 
