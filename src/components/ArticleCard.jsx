@@ -3,6 +3,7 @@ import { getArticleById, updateVotesById } from "../../api";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
+import { CommentAdder } from "./CommentAdder";
 
 export default function ArticleCard() {
   const [article, setArticle] = useState([]);
@@ -52,9 +53,14 @@ export default function ArticleCard() {
         <img src={article.article_img_url} className="images" />
         <br></br>
         <p className="article-text">{article.body}</p>
-        <p className="article-author">
+        <div className="article-author">
           Posted by {article.author} on {format(article.created_at, "PPPP")}
-        </p>
+          <div className="votes">
+            {votes}
+            <button onClick={() => handleClick(1)}>👍🏼</button>
+            <button onClick={() => handleClick(-1)}>👎🏼</button>
+          </div>
+        </div>
       </div>
       <div className="comment-section">
         <p className="comment-article">
@@ -63,10 +69,7 @@ export default function ArticleCard() {
           </Link>
         </p>
       </div>
-      <div className="votes">
-        <p onClick={() => handleClick("1")}>👍🏼</p> {votes}
-        <p onClick={() => handleClick("-1")}>👎🏼</p>
-      </div>
+      <CommentAdder />
     </section>
   );
 }

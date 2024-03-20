@@ -1,13 +1,17 @@
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getArticles } from "../../api";
 import { Link } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
 export default function Homepage() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const { loggedInUser } = useContext(UserContext);
+
+  const test = localStorage.getItem("user");
 
   useEffect(() => {
     getArticles()
@@ -50,7 +54,7 @@ export default function Homepage() {
         })}
       </Carousel>
       <div className="intro">
-        <h3>Welcome Guest</h3>
+        <h3>Welcome {loggedInUser.username}</h3>
         <p>
           You are currently visiting NC News! Take a look around the site and
           see what you can find...{" "}

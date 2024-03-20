@@ -19,7 +19,6 @@ export default function AllArticles() {
   function handleSortOnClick(event) {
     const newParams = new URLSearchParams(searchParams);
     newParams.set("sort_by", event.target.value);
-    console.log(event.target.value, "sort");
     setSortBy(event.target.value);
     setSearchParams(newParams);
   }
@@ -27,7 +26,6 @@ export default function AllArticles() {
   function handleOrderOnClick(event) {
     const newParams = new URLSearchParams(searchParams);
     newParams.set("order", event.target.value);
-    console.log(event.target.value, "order");
     setOrderBy(event.target.value);
     setSearchParams(newParams);
   }
@@ -61,15 +59,16 @@ export default function AllArticles() {
     <section className="fullCard">
       <div className="sortorder">
         <form className="sortby" name="sort_by" id="sortform">
-          <label>Sort by </label>
+          <label htmlFor="sort">Sort by </label>
           <select value={sortBy} onChange={handleSortOnClick}>
             <option value="created_at">Date</option>
             <option value="comment_count">Comments</option>
             <option value="votes">Votes</option>
           </select>
         </form>
+        <br></br>
         <form className="orderby" name="order_by" id="orderform">
-          <label>Order by </label>
+          <label htmlFor="order">Order by </label>
           <select value={orderBy} onChange={handleOrderOnClick}>
             <option value="DESC">Descending</option>
             <option value="ASC">Ascending</option>

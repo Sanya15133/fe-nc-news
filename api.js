@@ -26,6 +26,12 @@ export const getCommentsById = (article_id) => {
   });
 };
 
+export const getUsers = () => {
+  return newsApi.get("/users").then((response) => {
+    return response.data.users;
+  });
+};
+
 export const updateVotesById = (article_id, votes) => {
   return newsApi
     .patch(`/articles/${article_id}`, {
@@ -34,4 +40,24 @@ export const updateVotesById = (article_id, votes) => {
     .then((response) => {
       return response.data.article;
     });
+};
+
+export const addCommentById = (article_id, username, body) => {
+  console.log(username, body);
+
+  return newsApi
+    .post(`/articles/${article_id}/comments`, {
+      username,
+      body,
+    })
+    .then((response) => {
+      console.log(response, "response");
+      return response.data.comment;
+    });
+};
+
+export const deleteCommentByCommentId = ( comment_id) => {
+  return newsApi.delete(`/comments/${comment_id}`).then((response) => {
+    return response.data.comment;
+  });
 };
