@@ -1,10 +1,11 @@
-import { useContext, useState } from "react";
-import { addArticle } from "../../api";
+import { useContext, useEffect, useState } from "react";
+import { addArticle, getTopics } from "../../api";
 import { UserContext } from "./UserContext";
 
 export const ArticleAdder = () => {
   const { loggedInUser } = useContext(UserContext);
   const [isArticlePosted, setIsArticlePosted] = useState(false);
+  const [topics, setTopics] = useState([]);
   const [newArticle, setNewArticle] = useState({
     author: loggedInUser.username,
     title: "",
@@ -12,6 +13,16 @@ export const ArticleAdder = () => {
     topic: "",
     image: "",
   });
+
+  useEffect(() => {
+    getTopics()
+      .then((topicData) => {
+        setTopics(topicData);
+      })
+      .catch((err) => {
+        console.log(err, "something has gone wrong");
+      });
+  }, []);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -25,7 +36,6 @@ export const ArticleAdder = () => {
     event.preventDefault();
     addArticle(newArticle)
       .then((response) => {
-        console.log(response.data, "in article adder");
         setIsArticlePosted(true);
         setNewArticle({
           ...newArticle,
@@ -63,11 +73,18 @@ export const ArticleAdder = () => {
         <label htmlFor="topic">
           Topic:
           <br />
-          <input
+          <select
             name="topic"
             value={newArticle.topic}
             onChange={handleInputChange}
-          ></input>
+          >
+            <option value="">Select a topic</option>
+            {topics.map((topic, index) => (
+              <option key={index} value={topic.slug}>
+                {topic.slug}
+              </option>
+            ))}
+          </select>
         </label>
         <label htmlFor="body">
           Body:

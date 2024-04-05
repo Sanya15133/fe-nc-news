@@ -88,3 +88,9 @@ export const deleteArticleById = (article_id) => {
     return response.data.article;
   });
 };
+
+export const getTopics = () => {
+  return newsApi.get("/topics").then((response) => {
+    return response.data.topics;
+  });
+};
