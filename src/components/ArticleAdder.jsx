@@ -15,9 +15,9 @@ export const ArticleAdder = () => {
 
   function handleInputChange(event) {
     const { name, value } = event.target;
-    setNewArticle(prevState => ({
+    setNewArticle((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   }
 
@@ -32,7 +32,7 @@ export const ArticleAdder = () => {
           title: "",
           body: "",
           topic: "",
-          image: ""
+          image: "",
         });
       })
       .catch((err) => {
@@ -41,9 +41,7 @@ export const ArticleAdder = () => {
   }
 
   return (
-    <fieldset className="postform">
-      <br />
-      <br />
+    <fieldset className="article-form">
       <br />
       <h3>Post an article!</h3>
       <form name="article-form" onSubmit={handleSubmit}>
@@ -55,12 +53,21 @@ export const ArticleAdder = () => {
         <label htmlFor="title">
           Title:
           <br />
-          <input name="title" required value={newArticle.title} onChange={handleInputChange}></input>
+          <input
+            name="title"
+            required
+            value={newArticle.title}
+            onChange={handleInputChange}
+          ></input>
         </label>
         <label htmlFor="topic">
           Topic:
           <br />
-          <input name="topic" value={newArticle.topic} onChange={handleInputChange}></input>
+          <input
+            name="topic"
+            value={newArticle.topic}
+            onChange={handleInputChange}
+          ></input>
         </label>
         <label htmlFor="body">
           Body:
@@ -75,8 +82,13 @@ export const ArticleAdder = () => {
         <label htmlFor="article_image_url">
           Image:
           <br />
-          <input name="image" value={newArticle.image} onChange={handleInputChange}></input>
+          <input
+            name="image"
+            value={newArticle.image}
+            onChange={handleInputChange}
+          ></input>
         </label>
+        <br />
         <br />
         <button type="submit">Post</button>
       </form>
