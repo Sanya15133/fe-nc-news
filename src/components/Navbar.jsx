@@ -7,7 +7,7 @@ import { UserContext } from "./UserContext";
 
 function MyNavbar() {
   const { loggedInUser } = useContext(UserContext);
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  // const currentUser = JSON.parse(localStorage.getItem("user"));
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary" id="nav">

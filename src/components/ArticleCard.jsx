@@ -1,17 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { getArticleById, updateVotesById } from "../../api";
+import React, { useEffect, useState, useContext } from "react";
+import {
+  getArticleById,
+  updateArticleVotesById,
+  deleteArticleById,
+} from "../../api";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { CommentAdder } from "./CommentAdder";
+import { UserContext } from "./UserContext";
 
 export default function ArticleCard() {
   const [article, setArticle] = useState([]);
   const [votes, setVotes] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+  const { loggedInUser } = useContext(UserContext);
 
   const { article_id } = useParams();
+
+  function handleDelete(article_id) {
+    if (window.confirm("Are you sure you want to delete this article?")) {
+      deleteArticleById(article_id)
+        .then(() => {
+          // Refetch articles after deletion
+          getArticles(topicNames, getSortBy, getOrderBy)
+            .then((articleData) => {
+              setArticles(articleData);
+              setIsDeleted(true);
+            })
+            .catch(() => {
+              setIsError(true);
+            });
+        })
+        .catch(() => {
+          setIsError(true);
+        });
+    }
+  }
 
   useEffect(() => {
     getArticleById(article_id)
@@ -43,7 +70,7 @@ export default function ArticleCard() {
     setVotes((currVotes) => {
       return (currVotes += +event);
     });
-    updateVotesById(article_id, event);
+    updateArticleVotesById(article_id, event);
   }
 
   return (
@@ -68,8 +95,14 @@ export default function ArticleCard() {
             {article.comment_count} Comments
           </Link>
         </p>
+        {loggedInUser.username === article.author ? (
+          <button onClick={() => handleDelete(article_id)}>
+            Delete Article
+          </button>
+        ) : null}
       </div>
       <CommentAdder />
+      {isDeleted ? alert("Article has been succesfully deleted!") : null}
     </section>
   );
 }

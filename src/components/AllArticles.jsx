@@ -3,6 +3,7 @@ import { getArticles } from "../../api";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { format } from "date-fns";
+import { ArticleAdder } from "./ArticleAdder";
 
 export default function AllArticles() {
   const [articles, setArticles] = useState([]);
@@ -43,8 +44,10 @@ export default function AllArticles() {
 
   if (isLoading)
     return (
-      <div className="loading">
-        <p>Page is loading, will be up and running soon!</p>
+      <div className="d-flex justify-content-center">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
       </div>
     );
 
@@ -58,7 +61,7 @@ export default function AllArticles() {
   return (
     <section className="fullCard">
       <div className="sortorder">
-        <form className="sortby" name="sort_by" id="sortform">
+        <form className="sortby" name="sort_by">
           <label htmlFor="sort">Sort by </label>
           <select value={sortBy} onChange={handleSortOnClick}>
             <option value="created_at">Date</option>
@@ -67,14 +70,18 @@ export default function AllArticles() {
           </select>
         </form>
         <br></br>
-        <form className="orderby" name="order_by" id="orderform">
+        <form className="orderby" name="order_by" id="order">
           <label htmlFor="order">Order by </label>
-          <select value={orderBy} onChange={handleOrderOnClick}>
+          <select value={orderBy} onChange={handleOrderOnClick} id="order">
             <option value="DESC">Descending</option>
             <option value="ASC">Ascending</option>
           </select>
         </form>
+        <br></br>
       </div>
+      <Link to={"/articles/post"}>
+        <button>Post an article</button>
+      </Link>
       {articles.map(
         ({
           title,

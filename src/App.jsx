@@ -11,7 +11,7 @@ import AllUsers from "./components/AllUsers";
 import Header from "./components/Header";
 import React, { useState } from "react";
 import { UserContext } from "./components/UserContext";
-import { useContext, useEffect } from "react";
+import { ArticleAdder } from "./components/ArticleAdder";
 
 function App() {
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -41,6 +41,7 @@ function App() {
             element={<CommentCard />}
           />
           <Route path="/users" element={<AllUsers />} />
+          <Route path="/articles/post" element={<ArticleAdder />} />
         </Routes>
         <Footer />
       </UserContext.Provider>

@@ -32,7 +32,7 @@ export const getUsers = () => {
   });
 };
 
-export const updateVotesById = (article_id, votes) => {
+export const updateArticleVotesById = (article_id, votes) => {
   return newsApi
     .patch(`/articles/${article_id}`, {
       inc_votes: votes,
@@ -56,8 +56,35 @@ export const addCommentById = (article_id, username, body) => {
     });
 };
 
-export const deleteCommentByCommentId = ( comment_id) => {
+export const deleteCommentByCommentId = (comment_id) => {
   return newsApi.delete(`/comments/${comment_id}`).then((response) => {
     return response.data.comment;
+  });
+};
+
+export const updateCommentVotesById = (comment_id, votes) => {
+  return newsApi
+    .patch(`/comments/${comment_id}`, {
+      inc_votes: votes,
+    })
+    .then((response) => {
+      return response.data.comment;
+    });
+};
+
+export const addArticle = (newArticle) => {
+  console.log(newArticle, "in ai js function");
+
+  return newsApi.post(`/articles`, newArticle).then((response) => {
+    console.log(response.data.article, "response here");
+    return response.data.article;
+  });
+};
+
+export const deleteArticleById = (article_id) => {
+  console.log(article_id, "in ai js function");
+
+  return newsApi.delete(`/articles/${article_id}`).then((response) => {
+    return response.data.article;
   });
 };
