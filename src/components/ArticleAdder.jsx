@@ -81,7 +81,7 @@ export const ArticleAdder = () => {
             <option value="">Select a topic</option>
             {topics.map((topic, index) => (
               <option key={index} value={topic.slug}>
-                {topic.slug}
+                {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
               </option>
             ))}
           </select>
