@@ -4,6 +4,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { getArticles } from "../../api";
 import { Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
+import { Loading } from "./Loading";
 
 export default function Homepage() {
   const [articles, setArticles] = useState([]);
@@ -25,12 +26,7 @@ export default function Homepage() {
       });
   }, []);
 
-  if (isLoading)
-    return (
-      <div className="loading">
-        <p>Page is loading, will be up and running soon!</p>
-      </div>
-    );
+  if (isLoading) return <Loading />;
 
   if (isError)
     return (

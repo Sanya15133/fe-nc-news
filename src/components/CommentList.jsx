@@ -3,64 +3,65 @@ import { getCommentsById, deleteCommentByCommentId } from "../../api"; // Assumi
 import { Link, useParams } from "react-router-dom";
 import CommentCard from "./CommentCard";
 import { UserContext } from "./UserContext";
-import ToggleableComment from "./ToggleComments";
+import { Loading } from "./Loading";
+
+const PAGE_SIZE = 10; // Number of comments per page
 
 const AllCommentsById = () => {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [deleteComment, setDeleteComment] = useState("");
-  const [isDeleted, setIsDeleted] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const { loggedInUser } = useContext(UserContext);
 
   const { article_id } = useParams();
 
-  function handleComment(event) {
-    setDeleteComment(event.target.value);
-  }
-
-  function handleDelete(comment_id) {
-    deleteCommentByCommentId(comment_id)
-      .then((response) => {
-        console.log(response, "response");
-        // refresh comments after deletion
-        getCommentsById(article_id)
-          .then((commentData) => {
-            setComments(commentData);
-            setIsDeleted(true);
-          })
-          .catch(() => {
-            setIsError(true);
-          });
-      })
-      .catch((err) => {
-        console.log(err, "err");
-      });
-  }
-
   useEffect(() => {
-    getCommentsById(article_id)
-      .then((commentData) => {
-        setComments(commentData);
+    setIsLoading(true);
+    getCommentsById(article_id, currentPage, PAGE_SIZE)
+      .then((response) => {
+        if (response && response.comments && response.totalPages) {
+          console.log("Comments received from API:", response.comments);
+          setComments(response.comments);
+          setTotalPages(response.totalPages);
+          setIsError(false); // Reset error state on successful response
+        } else {
+          setIsError(true);
+        }
         setIsLoading(false);
       })
-      .catch(() => {
-        setIsLoading(false);
+      .catch((error) => {
+        console.error("Error fetching comments:", error);
         setIsError(true);
+        setIsLoading(false);
       });
-  }, []);
+  }, [article_id, currentPage]);
 
-  if (isLoading)
-    return (
-      <div className="loading">
-        <p>Page is loading, will be up and running soon!</p>
-      </div>
-    );
+  const handleDelete = (comment_id) => {
+    deleteCommentByCommentId(comment_id)
+      .then(() => {
+        // Refresh comments after deletion
+        setCurrentPage(1); // Reset to first page after deletion
+      })
+      .catch((error) => {
+        console.error("Error deleting comment:", error);
+      });
+  };
 
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+
+  if (isLoading) return <Loading />;
   if (isError)
     return (
       <div className="loading">
-        <p>Oops! This article has no comments to show!</p>
+        <p>Oops! Error fetching comments.</p>
       </div>
     );
 
@@ -69,19 +70,24 @@ const AllCommentsById = () => {
       <Link to={`/articles/${article_id}`}>
         <p>Back to article</p>
       </Link>
-      {comments.map((comment) => {
-        return (
-          <div key={comment.comment_id}>
-            <CommentCard key={comment.comment_id} comment={comment} />
-            {loggedInUser.username === comment.author ? (
-              <button onClick={() => handleDelete(comment.comment_id)}>
-                Delete Comment
-              </button>
-            ) : null}
-          </div>
-        );
-      })}
-      {isDeleted ? alert("Comment has been succesfully deleted!") : null}
+      {comments.map((comment) => (
+        <div key={comment.comment_id}>
+          <CommentCard comment={comment} />
+          {loggedInUser.username === comment.author && (
+            <button onClick={() => handleDelete(comment.comment_id)}>
+              Delete Comment
+            </button>
+          )}
+        </div>
+      ))}
+      <div>
+        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+          Next
+        </button>
+      </div>
     </div>
   );
 };

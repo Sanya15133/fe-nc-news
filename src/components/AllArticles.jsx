@@ -3,7 +3,7 @@ import { getArticles } from "../../api";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { format } from "date-fns";
-import { ArticleAdder } from "./ArticleAdder";
+import { Loading } from "./Loading";
 
 export default function AllArticles() {
   const [articles, setArticles] = useState([]);
@@ -42,14 +42,7 @@ export default function AllArticles() {
       });
   }, [topicNames, getSortBy, getOrderBy]);
 
-  if (isLoading)
-    return (
-      <div className="d-flex justify-content-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
+  if (isLoading) return <Loading />;
 
   if (isError)
     return (

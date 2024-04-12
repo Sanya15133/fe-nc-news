@@ -20,10 +20,22 @@ export const getArticleById = (article_id) => {
   });
 };
 
-export const getCommentsById = (article_id) => {
-  return newsApi.get(`/articles/${article_id}/comments`).then((response) => {
-    return response.data.articles;
-  });
+export const getCommentsById = (article_id, page, limit) => {
+  return newsApi
+    .get(`/articles/${article_id}/comments?page=${page}&limit=${limit}`)
+    .then((response) => {
+      // Extract comments and totalPages from the data object
+      const { comments, totalPages } = response.data;
+      if (comments && totalPages) {
+        return { comments, totalPages };
+      } else {
+        throw new Error("Invalid response structure from API");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching comments:", error);
+      throw error; // Propagate the error to the caller
+    });
 };
 
 export const getUsers = () => {
@@ -51,7 +63,6 @@ export const addCommentById = (article_id, username, body) => {
       body,
     })
     .then((response) => {
-      console.log(response, "response");
       return response.data.comment;
     });
 };

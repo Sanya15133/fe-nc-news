@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { CommentAdder } from "./CommentAdder";
 import { UserContext } from "./UserContext";
+import { Loading } from "./Loading";
 
 export default function ArticleCard() {
   const [article, setArticle] = useState([]);
@@ -52,12 +53,7 @@ export default function ArticleCard() {
       });
   }, [article_id]);
 
-  if (isLoading)
-    return (
-      <div className="loading">
-        <p>Page is loading, will be up and running soon!</p>
-      </div>
-    );
+  if (isLoading) return <Loading />;
 
   if (isError)
     return (
