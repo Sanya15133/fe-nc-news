@@ -256,3 +256,12 @@
   text-align: center;
   justify-content: center;
 }
+
+button {
+  background-color: rgb(179, 149, 165);
+  color: rgb(58, 52, 53);
+  border: 1px solid black;
+  border-radius: 5%;
+  justify-content: center;
+  text-align: center;
+}

@@ -22,7 +22,6 @@ const AllCommentsById = () => {
     getCommentsById(article_id, currentPage, PAGE_SIZE)
       .then((response) => {
         if (response && response.comments && response.totalPages) {
-          console.log("Comments received from API:", response.comments);
           setComments(response.comments);
           setTotalPages(response.totalPages);
           setIsError(false); // Reset error state on successful response
@@ -72,7 +71,7 @@ const AllCommentsById = () => {
       </Link>
       {comments.map((comment) => (
         <div key={comment.comment_id}>
-          <CommentCard comment={comment} />
+          <CommentCard comment={comment} comment_id={comment.comment_id} />
           {loggedInUser.username === comment.author && (
             <button onClick={() => handleDelete(comment.comment_id)}>
               Delete Comment

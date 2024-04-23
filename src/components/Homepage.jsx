@@ -1,7 +1,7 @@
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect, useContext } from "react";
-import { getArticles } from "../../api";
+import { getArticlesForCarousel } from "../../api";
 import { Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { Loading } from "./Loading";
@@ -15,7 +15,7 @@ export default function Homepage() {
   const test = localStorage.getItem("user");
 
   useEffect(() => {
-    getArticles()
+    getArticlesForCarousel()
       .then((articleData) => {
         setArticles(articleData);
         setIsLoading(false);

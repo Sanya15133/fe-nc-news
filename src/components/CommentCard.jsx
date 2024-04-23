@@ -1,12 +1,9 @@
 import { format } from "date-fns";
 import { updateCommentVotesById } from "../../api";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 
-const CommentCard = ({ comment }) => {
+const CommentCard = ({ comment, comment_id }) => {
   const [votes, setVotes] = useState(0);
-
-  const { comment_id } = useParams();
 
   function handleClick(event) {
     setVotes((currVotes) => {
